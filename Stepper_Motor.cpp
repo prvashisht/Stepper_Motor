@@ -122,6 +122,7 @@ void Stepper_Motor::takeSteps() {
 }
 
 void Stepper_Motor::takeSteps(int steps) {
+    // TODO: Use millis() or micros() to avoid using loop while the motor is turning.
     for (int i = 0; i < steps; i++) {
         _step = !_step;
         digitalWrite(_step_pin, _step);
