@@ -3,8 +3,7 @@
 Stepper_Motor::Stepper_Motor(
     int enable_pin,
     int direction_pin,
-    int step_pin)
-{
+    int step_pin) {
     _enable_pin = enable_pin;
     _direction_pin = direction_pin;
     _step_pin = step_pin;
@@ -26,8 +25,7 @@ Stepper_Motor::Stepper_Motor(
     int reset_pin,
     int ms1_pin,
     int ms2_pin,
-    int ms3_pin)
-{
+    int ms3_pin) {
     _enable_pin = enable_pin;
     _direction_pin = direction_pin;
     _step_pin = step_pin;
@@ -64,8 +62,7 @@ Stepper_Motor::Stepper_Motor(
     int ms1_pin,
     int ms2_pin,
     int ms3_pin,
-    int step_delay)
-{
+    int step_delay) {
     _enable_pin = enable_pin;
     _direction_pin = direction_pin;
     _step_pin = step_pin;
@@ -94,48 +91,38 @@ Stepper_Motor::Stepper_Motor(
     digitalWrite(ms3_pin, _ms3);
 }
 
-void Stepper_Motor::enable()
-{
+void Stepper_Motor::enable() {
     _enable = LOW;
     _enabled = true;
     digitalWrite(_enable_pin, _enable);
 }
 
-void Stepper_Motor::disable()
-{
+void Stepper_Motor::disable() {
     _enable = HIGH;
     _enabled = false;
     digitalWrite(_enable_pin, _enable);
 }
 
-void Stepper_Motor::clockwise()
-{
+void Stepper_Motor::clockwise() {
     _direction = HIGH;
     digitalWrite(_direction_pin, _direction);
 }
 
-void Stepper_Motor::antiClockwise()
-{
+void Stepper_Motor::antiClockwise() {
     _direction = LOW;
     digitalWrite(_direction_pin, _direction);
 }
 
-void Stepper_Motor::takeSteps()
-{
+void Stepper_Motor::takeSteps() {
     digitalWrite(_step_pin, HIGH);
-    delayMicroseconds(20);
     digitalWrite(_step_pin, LOW);
-    delay(1);
+    delayMicroseconds(_step_delay);
 }
 
-void Stepper_Motor::takeSteps(int steps)
-{
+void Stepper_Motor::takeSteps(int steps) {
     // TODO: Use millis() or micros() to avoid using loop while the motor is turning.
     // unsigned long long int prevTime;
-    for (int i = 0; i < steps; i++)
-    {
-        _step = !_step;
-        digitalWrite(_step_pin, _step);
-        delayMicroseconds(_step_delay);
+    for (int i = 0; i < steps; i++) {
+        takeSteps();
     }
 }
