@@ -2,44 +2,24 @@
 #define Stepper_Motor_h
 
 #include "Arduino.h"
-#define DEFAULT_ENABLE HIGH; // disabled
-#define DEFAULT_DIRECTION LOW; // clockwise
-#define DEFAULT_SLEEP HIGH; // not sleeping
-#define DEFAULT_RESET HIGH; // don't reset and accept step inputs
-#define DEFAULT_MS1 LOW; // TODO: Write microstepping hashmap
-#define DEFAULT_MS2 LOW; // no microstepping
-#define DEFAULT_MS3 LOW; // no microstepping
-#define MAX_STEP_DELAY 2000;
-#define MIN_STEP_DELAY 75;
-#define DEFAULT_STEP_DELAY 1000;
 
 class Stepper_Motor {
   public:
     Stepper_Motor(
-        int enable_pin,
-        int dir_pin,
-        int step_pin
+        byte enable_pin,
+        byte dir_pin,
+        byte step_pin
     );
     Stepper_Motor(
-        int enable_pin,
-        int dir_pin,
-        int step_pin,
-        int sleep_pin,
-        int reset_pin,
-        int ms1_pin,
-        int ms2_pin,
-        int ms3_pin
-    );
-    Stepper_Motor(
-        int enable_pin,
-        int dir_pin,
-        int step_pin,
-        int sleep_pin,
-        int reset_pin,
-        int ms1_pin,
-        int ms2_pin,
-        int ms3_pin,
-        int step_delay
+        byte enable_pin,
+        byte dir_pin,
+        byte step_pin,
+        byte sleep_pin,
+        byte reset_pin,
+        byte ms1_pin,
+        byte ms2_pin,
+        byte ms3_pin,
+        int step_delay = DEFAULT_STEP_DELAY
     );
     void enable();
     void disable();
@@ -49,7 +29,17 @@ class Stepper_Motor {
     void takeSteps(int steps);
     void setStepDelay(int delay_time);
   private:
-    int _enabled = false;
+    const int DEFAULT_ENABLE = HIGH;   // disabled
+    const int DEFAULT_DIRECTION = LOW; // clockwise
+    const int DEFAULT_SLEEP = HIGH;    // not sleeping
+    const int DEFAULT_RESET = HIGH;    // don't reset and accept step inputs
+    const int DEFAULT_MS1 = LOW;       // TODO: Write microstepping hashmap
+    const int DEFAULT_MS2 = LOW;       // no microstepping
+    const int DEFAULT_MS3 = LOW;       // no microstepping
+    const int MAX_STEP_DELAY = 2000;
+    const int MIN_STEP_DELAY = 75;
+    static const int DEFAULT_STEP_DELAY = 1000;
+    bool _enabled = false;
     int _enable = DEFAULT_ENABLE;
     int _direction = DEFAULT_DIRECTION;
     int _sleep = DEFAULT_SLEEP;
@@ -57,16 +47,18 @@ class Stepper_Motor {
     int _ms1 = DEFAULT_MS1;
     int _ms2 = DEFAULT_MS2;
     int _ms3 = DEFAULT_MS3;
+    byte _enable_pin;
+    byte _direction_pin;
+    byte _step_pin;
+    byte _sleep_pin;
+    byte _reset_pin;
+    byte _ms1_pin;
+    byte _ms2_pin;
+    byte _ms3_pin;
     int _step = LOW;
     int _step_delay = DEFAULT_STEP_DELAY;
-    int _enable_pin;
-    int _direction_pin;
-    int _step_pin;
-    int _sleep_pin;
-    int _reset_pin;
-    int _ms1_pin;
-    int _ms2_pin;
-    int _ms3_pin;
+    int _steps_taken = 0;
+    int _steps_to_take = 0;
 };
 
 #endif
