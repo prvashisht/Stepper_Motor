@@ -38,7 +38,7 @@ class Stepper_Motor {
     const int DEFAULT_MS3 = LOW;       // no microstepping
     const int MAX_STEP_DELAY = 2000;
     const int MIN_STEP_DELAY = 75;
-    static const int DEFAULT_STEP_DELAY = 1000;
+    static const int DEFAULT_STEP_DELAY = 1200;
     bool _enabled = false;
     int _enable = DEFAULT_ENABLE;
     int _direction = DEFAULT_DIRECTION;

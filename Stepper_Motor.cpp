@@ -78,15 +78,20 @@ void Stepper_Motor::antiClockwise() {
 }
 
 void Stepper_Motor::takeSteps() {
+    enable();
     digitalWrite(_step_pin, HIGH);
     digitalWrite(_step_pin, LOW);
     delayMicroseconds(_step_delay);
+    disable();
 }
 
 void Stepper_Motor::takeSteps(int steps) {
     // TODO: Use millis() or micros() to avoid using loop while the motor is turning.
     // unsigned long long int prevTime;
+    int _step_delay_backup = _step_delay;
+    _step_delay = 1500;
     for (int i = 0; i < steps; i++) {
         takeSteps();
     }
+    _step_delay = _step_delay_backup;
 }
