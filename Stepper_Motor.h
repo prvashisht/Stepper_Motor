@@ -2,6 +2,7 @@
 #define Stepper_Motor_h
 
 #include "Arduino.h"
+#include <WebSerial.h>
 
 class Stepper_Motor {
   public:
@@ -19,8 +20,8 @@ class Stepper_Motor {
         byte ms1_pin,
         byte ms2_pin,
         byte ms3_pin,
-        int step_delay = DEFAULT_STEP_DELAY
-    );
+        WebSerialClass &print,
+        int step_delay = DEFAULT_STEP_DELAY);
     void enable();
     void disable();
     void clockwise();
@@ -29,6 +30,7 @@ class Stepper_Motor {
     void takeSteps(int steps);
     void setStepDelay(int delay_time);
   private:
+    WebSerialClass *printer;
     const int DEFAULT_ENABLE = HIGH;   // disabled
     const int DEFAULT_DIRECTION = LOW; // clockwise
     const int DEFAULT_SLEEP = HIGH;    // not sleeping
@@ -38,7 +40,7 @@ class Stepper_Motor {
     const int DEFAULT_MS3 = LOW;       // no microstepping
     const int MAX_STEP_DELAY = 2000;
     const int MIN_STEP_DELAY = 75;
-    static const int DEFAULT_STEP_DELAY = 1200;
+    static const int DEFAULT_STEP_DELAY = 1300;
     bool _enabled = false;
     int _enable = DEFAULT_ENABLE;
     int _direction = DEFAULT_DIRECTION;
@@ -55,6 +57,8 @@ class Stepper_Motor {
     byte _ms1_pin;
     byte _ms2_pin;
     byte _ms3_pin;
+    unsigned long _prevStepMicros = 0;
+    unsigned long _currentStepMicros;
     int _step = LOW;
     int _step_delay = DEFAULT_STEP_DELAY;
     int _steps_taken = 0;

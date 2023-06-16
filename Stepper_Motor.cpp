@@ -26,7 +26,10 @@ Stepper_Motor::Stepper_Motor(
     byte ms1_pin,
     byte ms2_pin,
     byte ms3_pin,
-    int step_delay) {
+    WebSerialClass &print,
+    int step_delay)
+{
+    printer = &print; // operate on the adress of print
     _enable_pin = enable_pin;
     _direction_pin = direction_pin;
     _step_pin = step_pin;
@@ -78,15 +81,19 @@ void Stepper_Motor::antiClockwise() {
 }
 
 void Stepper_Motor::takeSteps() {
-    enable();
-    digitalWrite(_step_pin, HIGH);
-    digitalWrite(_step_pin, LOW);
-    delayMicroseconds(_step_delay);
-    disable();
+    // if (micros() - _prevStepMicros > _step_delay) {
+        enable();
+        _prevStepMicros = micros();
+        digitalWrite(_step_pin, HIGH);
+        digitalWrite(_step_pin, LOW);
+        delayMicroseconds(_step_delay);
+        disable();
+        // printer->println("Hello library with serial connectivity!");
+    // }
 }
 
 void Stepper_Motor::takeSteps(int steps) {
-    // TODO: Use millis() or micros() to avoid using loop while the motor is turning.
+    // TODO: Use millis()/micros() or a global _steps_taken variable to avoid using loop while the motor is turning.
     // unsigned long long int prevTime;
     int _step_delay_backup = _step_delay;
     _step_delay = 1500;
