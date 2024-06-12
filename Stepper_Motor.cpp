@@ -1,4 +1,4 @@
-#include "Stepper_Motor.h";
+#include "Stepper_Motor.h"
 
 Stepper_Motor::Stepper_Motor(
     byte enable_pin,
